@@ -39,10 +39,6 @@ const crawlingByBreakingnews = () => {
     }
 }
 
-// 기사 제목 : document.querySelectorAll('.tit_view')[0];
-// 기사 내용 : document.querySelectorAll('#harmonyContainer')[0];
-// 기사 카테고리 : https://api.v.kakao.com/p/346KaedeS2?paths=news,20200521181626807 -> extraInfo.cateInfo.category
-
 const crawlingByNewsByUrl = (url) => {
     // console.log(url);
     request(url, (error, response, body) => {
