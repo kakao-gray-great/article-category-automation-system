@@ -1,6 +1,7 @@
 const request = require('request');
 const cheerio = require('cheerio');
 
+// daum news crawling
 const crawlingByBreakingnews = () => {
     const category = 'society';
     // const category = 'politics';
@@ -39,6 +40,7 @@ const crawlingByBreakingnews = () => {
     }
 }
 
+// url crawling
 const crawlingByNewsByUrl = (url) => {
     // console.log(url);
     request(url, (error, response, body) => {
@@ -75,6 +77,7 @@ const crawlingByNewsByUrl = (url) => {
 
 let globalChannel;
 
+// rabbitmq connect
 const amqp = require('amqplib/callback_api');
 const queueName = 'PRE_NEWS';
 amqp.connect('amqp://localhost', function(error0, connection) {
@@ -95,6 +98,7 @@ amqp.connect('amqp://localhost', function(error0, connection) {
     });
 });
 
+// date format
 const pad = (n, width, z) => {
     z = z || '0';
     n = n + '';
