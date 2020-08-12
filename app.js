@@ -13,9 +13,9 @@ const crawlingByBreakingnews = () => {
     // const category = 'society';
     // const category = 'politics';
     // const category = 'economic';
-    const category = 'foreign';
+    // const category = 'foreign';
     // const category = 'culture';
-    // const category = 'digital';
+    const category = 'digital';
 
     let count = 0;
     for(let day = 1; day <= 20; day++) {
