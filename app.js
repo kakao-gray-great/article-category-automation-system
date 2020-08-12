@@ -12,8 +12,8 @@ const pad = (n, width, z) => {
 const crawlingByBreakingnews = () => {
     // const category = 'society';
     // const category = 'politics';
-    const category = 'economic';
-    // const category = 'foreign';
+    // const category = 'economic';
+    const category = 'foreign';
     // const category = 'culture';
     // const category = 'digital';
 
@@ -57,35 +57,33 @@ const crawlingByNewsByUrl = (url) => {
     // console.log(url);
     request(url, (error, response, body) => {
         if(body) {
-            const $ = cheerio.load(body);
+            try {
+                const $ = cheerio.load(body);
 
-            let title = $('.tit_view')[0].children[0].data;
-            let contentArr = $('#harmonyContainer p');
-            let content = "";
-            for(let i = 0; i < contentArr.length; i++) {
-                if(contentArr[i].children[0] === undefined || contentArr[i].children[0].data === undefined) {
-                    console.log(`[CONTINUE] contentArr[${i}].children[0].data === undefined`);
-                    continue;
+                let title = $('.tit_view')[0].children[0].data;
+                let contentArr = $('#harmonyContainer p');
+                let content = "";
+                for(let i = 0; i < contentArr.length; i++) {
+                    if(contentArr[i].children[0] === undefined || contentArr[i].children[0].data === undefined) {
+                        console.log(`[CONTINUE] contentArr[${i}].children[0].data === undefined`);
+                        continue;
+                    }
+                    content += contentArr[i].children[0].data + " ";
                 }
-                content += contentArr[i].children[0].data + " ";
-            }
 
-            try{
                 let category = $('.gnb_comm')[0].attribs['data-category'];
-            } catch(e) {
-                console.log(e);
-            }
-            
-            
+                
+                let newsObject = {
+                    title, 
+                    content,
+                    category
+                }
 
-            let newsObject = {
-                title, 
-                content,
-                category
+                console.log(newsObject);
+                globalChannel.sendToQueue(queueName, Buffer.from(JSON.stringify(newsObject)));
+            } catch(e) {
+                console.log(e)
             }
-            console.log(category)
-            // console.log(newsObject);
-            // globalChannel.sendToQueue(queueName, Buffer.from(JSON.stringify(newsObject)));
 
         } else {
             return;
@@ -94,7 +92,6 @@ const crawlingByNewsByUrl = (url) => {
     });
 }
 
-/*
 let globalChannel;
 
 // rabbitmq connect
@@ -117,15 +114,12 @@ amqp.connect('amqp://localhost', function(error0, connection) {
         crawlingByBreakingnews();
     });
 });
-*/
 
 crawlingByBreakingnews();
 
-/*
-// date format
-const pad = (n, width, z) => {
-    z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
-*/
+// // date format
+// const pad = (n, width, z) => {
+//     z = z || '0';
+//     n = n + '';
+//     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+// }
