@@ -11,8 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RabbitConsumer {
 
+    @Autowired
+    NewsDtoRepository newsDtoRepository;
+
     @RabbitListener(queues = "PRE_NEWS")
-    public void receiveMessage(final String message) {
-        System.out.println("message = " + message);
+    public void receiveMessage(final String message) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        NewsDto newsDto = objectMapper.readValue(message, NewsDto.class);
+        newsDtoRepository.save(newsDto);
+        System.out.println("newsDto = " + newsDto);
     }
 }
+
