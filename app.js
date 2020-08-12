@@ -70,7 +70,13 @@ const crawlingByNewsByUrl = (url) => {
                 content += contentArr[i].children[0].data + " ";
             }
 
-            let category = $('.gnb_comm')[0].attribs['data-category'];
+            try{
+                let category = $('.gnb_comm')[0].attribs['data-category'];
+            } catch(e) {
+                console.log(e);
+            }
+            
+            
 
             let newsObject = {
                 title, 
