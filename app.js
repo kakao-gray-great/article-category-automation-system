@@ -1,15 +1,27 @@
 const request = require('request');
 const cheerio = require('cheerio');
 
+// date format
+const pad = (n, width, z) => {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 // daum news crawling
 const crawlingByBreakingnews = () => {
-    const category = 'society';
+    // const category = 'society';
     // const category = 'politics';
+    const category = 'economic';
+    // const category = 'foreign';
+    // const category = 'culture';
+    // const category = 'digital';
+
     let count = 0;
     for(let day = 1; day <= 20; day++) {
         for(let page = 1; page <= 5; page++) {
             // console.log(`https://news.daum.net/breakingnews/${category}?page=${page}&regDate=202006${pad(day, 2)}`);
-            request(`https://news.daum.net/breakingnews/${category}?page=${page}&regDate=202006${pad(day, 2)}`, (error, response, body) => {
+            request(`https://news.daum.net/breakingnews/${category}?page=${page}&regDate=202007${pad(day, 2)}`, (error, response, body) => {
                 
                 if(body) {
                     const $ = cheerio.load(body);
@@ -20,7 +32,7 @@ const crawlingByBreakingnews = () => {
                     let newsArr = [];
 
                     for(let i = 0; i < aArr.length; i++) {
-                        if(aArr[i].attribs.href.includes("v.daum.net/v/202006") )
+                        if(aArr[i].attribs.href.includes("v.daum.net/v/202007") )
                             newsArr.push(aArr[i].attribs.href);
                     }
 
@@ -65,8 +77,9 @@ const crawlingByNewsByUrl = (url) => {
                 content,
                 category
             }
-            console.log(newsObject);
-            globalChannel.sendToQueue(queueName, Buffer.from(JSON.stringify(newsObject)));
+            console.log(category)
+            // console.log(newsObject);
+            // globalChannel.sendToQueue(queueName, Buffer.from(JSON.stringify(newsObject)));
 
         } else {
             return;
@@ -75,6 +88,7 @@ const crawlingByNewsByUrl = (url) => {
     });
 }
 
+/*
 let globalChannel;
 
 // rabbitmq connect
@@ -97,10 +111,15 @@ amqp.connect('amqp://localhost', function(error0, connection) {
         crawlingByBreakingnews();
     });
 });
+*/
 
+crawlingByBreakingnews();
+
+/*
 // date format
 const pad = (n, width, z) => {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
+*/
