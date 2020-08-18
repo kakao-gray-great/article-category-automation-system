@@ -18,7 +18,7 @@ df = df.fillna(' ')
 train_set = df
 X = train_set['content']
 # print(X)
-
+ 
 le = LabelEncoder()
 y = le.fit_transform(train_set['category'])
 # print(y)
