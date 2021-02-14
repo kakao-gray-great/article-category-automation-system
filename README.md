@@ -18,7 +18,7 @@ Docker, Postman, Rabbitmq와 같은 기술을 공부하고 다양한 기술을 �
 - <b>CRAWLING</b>: NodeJs
 - <b>DATA-PROCESSING</b>: Spring-Boot
 - <b>DATABASE</b>: PostgreSQL
-- <b>MACHIN-LEARNING</b>: Python(skitlearn)
+- <b>MACHIN-LEARNING</b>: Python(Scikitlearn)
 - <b>ETC</b>: Postman, Docker, RabbitMQ, Github 
 
 ## :computer: 시나리오 VIEW
